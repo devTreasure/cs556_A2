@@ -22,6 +22,11 @@ plt.axis('off')
 plt.draw()
 plt.show()
 
+
+print 'node iteration'
+for n in G3:
+    print n
+print'--'
 print 'all nodees'
 nodes = nx.shortest_path(G3,99).keys()
 print 'shortst path'
