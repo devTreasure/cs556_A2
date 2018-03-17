@@ -1,6 +1,21 @@
 __author__ = 'Bhavin.Parekh'
-import  networkx as nx
+import networkx as nx
 import matplotlib.pyplot as plt
+
+
+N = 10
+G22=nx.grid_2d_graph(N,N)
+pos = dict( (n, n) for n in G22.nodes() )
+labels = dict( ((i, j), i + (N-1-j) * N ) for i, j in G22.nodes() )
+nx.relabel_nodes(G22,labels,False)
+
+G3=nx.erdos_renyi_graph(100,0.1)
+pos = {y:x for x,y in labels.iteritems()}
+nx.draw_networkx(G3, pos=pos, with_labels=True, node_size = 300)
+print G3.nodes()
+plt.axis('off')
+plt.draw()
+plt.show()
 
 g = nx.Graph(infect=0)
 g.add_nodes_from([1,2,3,4,5],x1=0,explored=False)

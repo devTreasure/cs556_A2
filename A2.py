@@ -1,6 +1,9 @@
 __author__ = 'Bhavin.Parekh'
 import  networkx as nx
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
+
+
+
 
 g = nx.Graph(infect=0)
 g.add_nodes_from([1,2,3,4,5],x1=0,explored=False)

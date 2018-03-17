@@ -17,14 +17,13 @@ g.add_edge(5,2)
 g.add_edge(2,5)
 g.add_edge(5,4)
 
+
 nx.draw(g,with_labels=True)
 plt.draw()
 plt.show()
 
 G2 = nx.DiGraph()
-G2.add_edges_from(
-    [('A', 'B'), ('A', 'C'), ('D', 'B'), ('E', 'C'), ('E', 'F'),
-     ('B', 'H'), ('B', 'G'), ('B', 'F'), ('C', 'G')])
+G2.add_edges_from([('A', 'B'), ('A', 'C'), ('D', 'B'), ('E', 'C'), ('E', 'F'), ('B', 'H'), ('B', 'G'), ('B', 'F'), ('C', 'G')])
 
 nx.draw(G2, with_labels = True)
 plt.show()
