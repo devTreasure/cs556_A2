@@ -58,8 +58,15 @@ print 'end Find neighbour'
 
 def fetch_next_node(g,lst):
     for n in lst:
-     if not  g.node[n]['infected']==True:
-         return n
+     if not (g.node[n]['infected']):
+      return n
+
+     # break;
+    #else:
+        #for n1 in lst:
+        # lst1 = find_neigbours(n1)
+        # fetch_next_node(g,lst1)
+
 
 def start_infection(graph,prob=0.5,start_node='A'):
     if not graph.node[start_node]['infected']:
@@ -70,8 +77,22 @@ def start_infection(graph,prob=0.5,start_node='A'):
             for n1 in new_nbrs:
                 start_infection(graph,prob,n1)
         else:
+             last_visited_list=new_nbrs
              new_node=fetch_next_node(graph,new_nbrs)
-             start_infection(graph,prob,new_node)
+             if(new_node is None):
+                 new_nbrs=[]
+                 new_nbrs= find_neigbours(last_visited_list[0])
+                 newX_node=fetch_next_node(graph,new_nbrs)
+                 if(new_node is None and newX_node is None):
+                     find_node=graph.nodes
+                     val=''
+                     for n in find_node:
+                         if not (graph.node[n]['infected']==True):
+                           start_infection(graph,prob,n)
+                 else:
+                   start_infection(graph,prob,newX_node)
+             else:
+                  start_infection(graph,prob,new_node)
     else:
        new_nbrs=[]
        new_nbrs= find_neigbours(start_node)
