@@ -37,8 +37,8 @@ print 'single  node'
 print(G3.node[1])
 
 g = nx.Graph(infect=0)
-g.add_nodes_from([1,2,3,4,5],x1=0,explored=False)
-g.add_edge(1,2,)
+g.add_nodes_from([11,2,3,4,5],x1=0,explored=False)
+g.add_edge(11,2)
 g.add_edge(4,2)
 g.add_edge(3,5)
 g.add_edge(5,2)

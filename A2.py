@@ -1,6 +1,5 @@
 __author__ = 'Bhavin.Parekh'
 import  networkx as nx
-#import matplotlib.pyplot as plt
 
 
 
