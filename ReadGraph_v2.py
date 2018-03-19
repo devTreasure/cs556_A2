@@ -76,7 +76,7 @@ current_infected_nodes=[]
 unexplored_node=[]
 total_iteration=0
 
-def start_infection(graph,prob=0.9,start_node=0):
+def start_infection(graph,prob=0.4,start_node=0):
     global total_iteration
 
     if not graph.node[start_node]['infected']:
@@ -110,10 +110,16 @@ def add_this_unexplored(new_neigbours,graph):
             unexplored_node.append(x)
 
 start = timeit.default_timer()
-start_infection(g,0.9,0)
+start_infection(g,0.4,0)
 #check any other left out
 for u in unexplored_node:
     if g.node[u]['infected']==False:
-       start_infection(g,0.9,u)
+       start_infection(g,0.4,u)
 stop = timeit.default_timer()
+print(nx.get_node_attributes(g, 'infected'))
+print(nx)
+print('Total # of Nodes')
+print(g.number_of_nodes())
+print('Total # of Edges')
+print(g.number_of_edges())
 print('total run time ; {0}'.format(stop-start))
