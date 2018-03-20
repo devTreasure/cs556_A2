@@ -2,7 +2,7 @@ __author__ = 'Bhavin.Parekh'
 __author__ = 'Bhavin.Parekh'
 import networkx as nx
 import matplotlib.pyplot as plt
-import timeit
+
 import timeit
 test_file = open(r'1018_edges.csv','r')
 #test_file = open(r'edges2.csv','r')
