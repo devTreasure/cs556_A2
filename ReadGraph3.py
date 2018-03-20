@@ -1,11 +1,9 @@
 __author__ = 'Bhavin.Parekh'
-__author__ = 'Bhavin.Parekh'
 import networkx as nx
 import matplotlib.pyplot as plt
 import timeit
-import timeit
-#test_file = open(r'1018_edges.csv','r')
-test_file = open(r'edges2.csv','r')
+test_file = open(r'edges.csv','r')
+
 node_list=[]
 edge_list=[]
 
@@ -28,7 +26,7 @@ n=4#len(node_list) # finding total nodes
 p=1
 
 
-g = nx.read_edgelist(test_file,delimiter=',', nodetype=int, create_using=nx.erdos_renyi_graph(n,p))
+g = nx.read_edgelist(test_file,delimiter=',', nodetype=str, create_using=nx.erdos_renyi_graph(n,p))
 
 attr = {n: {"infected":False} for n in g.nodes()}
 nx.set_node_attributes(g, attr)
@@ -42,8 +40,8 @@ print 'Atrribute for one node'
 #print(g.node['A']['infected'])
 #print(g.node['P']['infected'])
 print '#Atrribute for one node'#'
-plt.draw()
-plt.show()
+#plt.draw()
+#plt.show()
 
 list_nodes=[]
 def find_neigbours(node_name):
@@ -72,78 +70,74 @@ def fetch_next_node(g,lst):
 
 
 
-
+explored_node=[]
 current_infected_nodes=[]
 unexplored_node=[]
 total_iteration=0
 
-total_infected_node=[]
-start = timeit.default_timer()
-def start_infection(graph,prob=0.4,start_node=0):
+
+
+def remove_vistited_item():
+    pass
+
+
+total_list_nodes=g.number_of_nodes()
+
+def start_infection(graph,prob=0.4,start_node='A'):
     global total_iteration
+
     if not graph.node[start_node]['infected']:
       total_iteration  = total_iteration  + 1
-
-
       print('Round : '+str(total_iteration))
       print('Infected Node:'+ str(start_node))
-      stop = timeit.default_timer()
-      print('Time #')
-      print(stop-start)
-      print('##---------##')
       graph.node[start_node]['infected']=True
-      if((graph.node[start_node]['infected']==True) and (not(total_infected_node.__contains__(start_node)))):
-       total_infected_node.append(start_node)
 
-      if(not(current_infected_nodes.__contains__(start_node))):
-         current_infected_nodes.append(start_node)
+      if(not(explored_node.__contains__(start_node))):
+          explored_node.append(start_node)
+
+     # if(not(current_infected_nodes.__contains__(start_node))):
+          # current_infected_nodes.append(start_node)
       new_neigbours=[]
       new_neigbours= find_neigbours(start_node)
 
-      print('neighbours :',new_neigbours)
+    # for item in explored_node:
+    #  while new_neigbours.count(item) > 0:
+    #   new_neigbours.remove(item)
+    new_neigbours=remove_explored_from_the_new_neighborts(new_neigbours)
+    print('neighbours :',new_neigbours)
 
-      add_this_unexplored(new_neigbours,graph)
-      remove_explored(graph)
-      listTotal=-1
-      listTotal=len(new_neigbours)
-      if( len(unexplored_node)>0):
-          iterationValues=int(round(len(unexplored_node)*prob))
-          print(unexplored_node[0])
-          for x in range(0,iterationValues):
+    #add_this_unexplored(new_neigbours,graph)
+    listTotal=-1
+    listTotal=len(new_neigbours)
+    if(listTotal >0 ):
+          iterationValues=int(round(listTotal*prob))
+          for x in  range(0,iterationValues):
              #print(new_neigbours[x])
-             strnode=unexplored_node[x]             #print(str)
+             strnode=new_neigbours[x]
+             #print(str)
              start_infection(graph,prob,strnode)
-      if(len(unexplored_node) >0 and iterationValues==0):
-            start_infection(graph,prob,unexplored_node[0])
 
 
-#print('end of method')
-#print(total_iteration)
-
-def remove_explored(graph):
-    for x in unexplored_node:
-        if((graph.node[x]['infected']==True)):
-            unexplored_node.remove(x)
+def remove_explored_from_the_new_neighborts(lst):
+   for item in explored_node:
+     while lst.count(item) > 0:
+      lst.remove(item)
+   return lst
 
 def add_this_unexplored(new_neigbours,graph):
     for x in new_neigbours:
-        if(not(unexplored_node.__contains__(x)) and (not (graph.node[x]['infected']==True)) ):
+        if(not(unexplored_node.__contains__(x)) ):
             unexplored_node.append(x)
 
 start = timeit.default_timer()
-start_infection(g,0.4,0)
+start_infection(g,0.4,'A')
 #check any other left out
-print('#################')
-print('#################done without exiting recursion#############')
-
-print('####left out node#########')
-if(len(unexplored_node)>0):
- for u in unexplored_node:
+for u in unexplored_node:
     if g.node[u]['infected']==False:
-       #start_infection(g,0.4,u)
-       print (u)
+       start_infection(g,0.4,u)
 stop = timeit.default_timer()
 print(nx.get_node_attributes(g, 'infected'))
+print(nx)
 print('Total # of Nodes')
 print(g.number_of_nodes())
 print('Total # of Edges')

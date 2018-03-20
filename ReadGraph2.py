@@ -3,7 +3,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 
 test_file = open(r'edges.csv','r')
-
+#test_file = open(r'1018_edges.csv','r')
 node_list=[]
 edge_list=[]
 
