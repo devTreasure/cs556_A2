@@ -1,8 +1,8 @@
 __author__ = 'Bhavin.Parekh'
 import networkx as nx
 import matplotlib.pyplot as p
-#G= nx.erdos_renyi_graph(500,0.008052)
-G= nx.erdos_renyi_graph(5,0.6)
+G= nx.erdos_renyi_graph(500,0.008052)
+#G= nx.erdos_renyi_graph(5,0.6)
 for x in nx.generate_edgelist(G, data=False):
     print(x)
 # g=nx.Graph.add_nodes_from(A'','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',

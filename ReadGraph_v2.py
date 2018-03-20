@@ -4,8 +4,8 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import timeit
 import timeit
-#test_file = open(r'1018_edges.csv','r')
-test_file = open(r'edges2.csv','r')
+test_file = open(r'1018_edges.csv','r')
+#test_file = open(r'edges2.csv','r')
 node_list=[]
 edge_list=[]
 
@@ -37,8 +37,8 @@ nx.set_node_attributes(g, attr)
 nx.draw(g,with_labels=True)
 print(g.edges(data=True))
 
-print '##########'
-print 'Atrribute for one node'
+#print '##########'
+#print 'Atrribute for one node'
 #print(g.node['A']['infected'])
 #print(g.node['P']['infected'])
 print '#Atrribute for one node'#'
@@ -55,9 +55,9 @@ def find_neigbours(node_name):
            list_nodes.append(n)
     return list_nbr
 
-print 'Find neighbour'
+#print 'Find neighbour'
 #print(find_neigbours('P'))
-print 'end Find neighbour'
+#print 'end Find neighbour'
 
 def fetch_next_node(g,lst):
     for n in lst:
@@ -79,18 +79,19 @@ total_iteration=0
 
 total_infected_node=[]
 start = timeit.default_timer()
+x_val=[]
+y_val=[]
 def start_infection(graph,prob=0.4,start_node=0):
+  try:
     global total_iteration
     if not graph.node[start_node]['infected']:
       total_iteration  = total_iteration  + 1
 
 
-      print('Round : '+str(total_iteration))
-      print('Infected Node:'+ str(start_node))
-      stop = timeit.default_timer()
-      print('Time #')
-      print(stop-start)
-      print('##---------##')
+      #print('Round : '+str(total_iteration))
+      #print('Infected Node:'+ str(start_node))
+
+      #print('##---------##')
       graph.node[start_node]['infected']=True
       if((graph.node[start_node]['infected']==True) and (not(total_infected_node.__contains__(start_node)))):
        total_infected_node.append(start_node)
@@ -100,22 +101,33 @@ def start_infection(graph,prob=0.4,start_node=0):
       new_neigbours=[]
       new_neigbours= find_neigbours(start_node)
 
-      print('neighbours :',new_neigbours)
+      #print('neighbours :',new_neigbours)
 
       add_this_unexplored(new_neigbours,graph)
       remove_explored(graph)
       listTotal=-1
       listTotal=len(new_neigbours)
-      if( len(unexplored_node)>0):
+      if(len(unexplored_node)>0):
           iterationValues=int(round(len(unexplored_node)*prob))
-          print(unexplored_node[0])
+      if(iterationValues>0):
+
+          print('total node to be affectd with probability '+str(iterationValues))
+          y_val.append(iterationValues)
+
+          stop = timeit.default_timer()
+          x_val.append(stop)
+          print('Time # ' +str(stop))
+          #print(unexplored_node[0])
+          print(unexplored_node)
           for x in range(0,iterationValues):
              #print(new_neigbours[x])
-             strnode=unexplored_node[x]             #print(str)
-             start_infection(graph,prob,strnode)
-      if(len(unexplored_node) >0 and iterationValues==0):
+             if(len(unexplored_node)>2):
+              strnode=unexplored_node[x]             #print(str)
+              start_infection(graph,prob,strnode)
+          if(len(unexplored_node) >0 and iterationValues==0 or iterationValues==1):
             start_infection(graph,prob,unexplored_node[0])
-
+  except:
+      print 'error'
 
 #print('end of method')
 #print(total_iteration)
@@ -135,7 +147,9 @@ start_infection(g,0.4,0)
 #check any other left out
 print('#################')
 print('#################done without exiting recursion#############')
-
+print('length of collectiions')
+print(len(x_val))
+print(len(y_val))
 print('####left out node#########')
 if(len(unexplored_node)>0):
  for u in unexplored_node:
