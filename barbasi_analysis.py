@@ -1,10 +1,11 @@
 __author__ = 'Bhavin.Parekh'
 __author__ = 'Bhavin.Parekh'
+__author__ = 'Bhavin.Parekh'
 import networkx as nx
 import matplotlib.pyplot as plt
 import timeit
 import timeit
-test_file = open(r'1018_edges.csv','r')
+test_file = open(r'barbasi_edges.csv','r')
 #test_file = open(r'edges2.csv','r')
 node_list=[]
 edge_list=[]
@@ -29,7 +30,7 @@ p=1
 
 prblty_value=0.5
 
-g = nx.read_edgelist(test_file,delimiter=',', nodetype=int, create_using=nx.erdos_renyi_graph(n,p))
+g = nx.read_edgelist(test_file,delimiter=',', nodetype=int, create_using=nx.barabasi_albert_graph(n,p))
 
 attr = {n: {"infected":False,"immune":False} for n in g.nodes()}
 nx.set_node_attributes(g, attr)
@@ -118,13 +119,8 @@ def start_infection(graph,prob,start_node=0):
           print('total node to be affectd with probability '+str(iterationValues))
          # y_val.append(iterationValues)
           infected_node_count=infected_node_count+iterationValues+1
-          if(len(y_val)==0):
-              y_val.append(0.4)
-
           y_val.append(infected_node_count)
           stop = timeit.default_timer()
-          if(len(x_val)==0):
-              x_val.append(0)
           x_val.append(stop)
           print('Time # ' +str(stop))
           #print(unexplored_node[0])
@@ -176,7 +172,7 @@ print('total run time ; {0}'.format(stop-start))
 plt.yscale('symlog', linthreshy=0.0001)
 plt.ylabel('Infected nodes')
 plt.xlabel('Time->')
-#plt.xscale('symlog', linthreshy=0.01)
+plt.xscale('symlog', linthreshy=0.01)
 plt.plot(x_val,y_val)
 plt.show()
 
